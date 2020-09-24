@@ -1,0 +1,10 @@
+GET http://localhost:4000/api/v1/test/a
+###
+
+GET http://localhost:4000/api/v1/test/b
+###
+
+GET http://localhost:4000/api/v1/test/c
+###
+
+GET http://localhost:4000/api/v1/test/d

@@ -1,0 +1,71 @@
+DELETE http://localhost:4000/api/v1/auth/delete_all
+
+###
+DELETE http://localhost:4000/api/v1/user/delete_all
+
+###
+# @name signUpAPI
+POST http://localhost:4000/api/v1/auth/sign_up
+Content-Type: application/json
+
+{
+    "email":"nihal+test1@cabbuddies.com",
+    "password":"strong",
+    "firstName":"Nihal",
+    "lastName":"Konda"
+}
+
+###
+
+@accessToken = {{signUpAPI.response.body.$.accessToken.value}}
+@refreshToken = {{signUpAPI.response.body.$.refreshToken.value}}
+
+###
+# @name signInAPI
+
+POST http://localhost:4000/api/v1/auth/sign_in
+Content-Type: application/json
+
+{
+    "email":"nihal+test1@cabbuddies.com",
+    "password":"weak"
+}
+
+###
+
+@accessToken = {{signInAPI.response.body.$.accessToken.value}}
+@refreshToken = {{signInAPI.response.body.$.refreshToken.value}}
+
+###
+DELETE http://localhost:4000/api/v1/auth/sign_out
+Authorization: Refresh {{refreshToken}}
+
+###
+DELETE http://localhost:4000/api/v1/auth/sign_out_all
+Authorization: Refresh {{refreshToken}}
+
+###
+# @name getAccessToken
+GET http://localhost:4000/api/v1/auth/access_token
+Authorization: Refresh {{refreshToken}}
+
+###
+@accessToken = {{getAccessToken.response.body.$.accessToken.value}}
+
+###
+GET http://localhost:4000/api/v1/user
+Content-Type: application/json
+
+{
+    "query":{
+        "email": { "$regex": "@", "$options": "i" }
+    }
+}
+
+###
+GET http://localhost:4000/api/v1/user/me
+Authorization: Access {{accessToken}}
+
+###
+GET http://localhost:4000/api/v1/user/5f4bc10af0bb26189721aa57
+Authorization: Access {{accessToken}}

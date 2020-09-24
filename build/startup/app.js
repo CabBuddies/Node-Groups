@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const node_library_1 = require("node-library");
+const repositories_1 = require("../repositories");
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(node_library_1.Middlewares.logger('v1'));
+app.use(node_library_1.Middlewares.requestProcessor(new repositories_1.RefreshTokenRepository()));
+exports.default = app;
