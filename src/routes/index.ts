@@ -1,6 +1,11 @@
-import * as express from 'express';
-import {router as GroupRoutes} from './group.routes';
+import GroupRoutes from './group.routes';
+import PostRoutes from './post.routes';
+import ReplyRoutes from './reply.routes';
+import OpinionRoutes from './opinion.routes';
 
-export {
-    GroupRoutes
-};
+export{
+    GroupRoutes,
+    PostRoutes,
+    ReplyRoutes,
+    OpinionRoutes
+}

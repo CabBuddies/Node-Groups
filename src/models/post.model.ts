@@ -1,15 +1,35 @@
+import {primaryDb} from '../db';
 import * as mongoose from 'mongoose';
+import { statsSchema } from '../schemas';
 
 const postSchema = new mongoose.Schema({
+    groupId: {
+        type:String,
+        required: 'groupId is required'
+    },
+    title:{
+        type: String,
+        trim: true,
+        required: 'Post Title is required'
+    },
     body:{
         type: String,
         trim: true,
         required: 'Post Body is required'
     },
-    topic:{
+    topics:[{
         type: String,
         trim: true
+    }],
+    author:{
+       type:String,
+       required: 'author is required'
     },
+    active:{
+        type:Boolean,
+        default : true
+    },
+    stats:statsSchema,
     createdAt:{
         type: Date,
         default: Date.now
@@ -18,17 +38,10 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    author:{
-       type:String,
-       required: 'user is required'
-    },
-    groupId: {
-        type:String,
-        required: 'group id is required'
-    }
+    customAttributes:mongoose.Schema.Types.Mixed
 });
 
 
-const Post = mongoose.model('Post',postSchema);
+const Post = primaryDb.model('Post',postSchema);
 
 export default Post;

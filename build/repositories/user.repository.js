@@ -14,12 +14,8 @@ const models_1 = require("../models");
 class UserRepository extends node_library_1.Repositories.BaseRepository {
     constructor() {
         super(models_1.User);
-        this.getUserByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.findOne({ email });
-        });
-        this.updateUserByEmail = (email, entity) => __awaiter(this, void 0, void 0, function* () {
-            delete entity.email;
-            return yield this.model.updateOne({ email }, entity);
+        this.getUsersByUserIds = (userIds) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.model.find({ "userId": { $in: userIds } });
         });
     }
 }

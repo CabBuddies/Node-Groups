@@ -1,7 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = exports.AuthService = void 0;
-const auth_service_1 = require("./auth.service");
-exports.AuthService = auth_service_1.default;
+exports.UserService = exports.PostService = exports.OpinionService = exports.ReplyService = exports.GroupService = exports.AuthorService = void 0;
+const group_service_1 = require("./group.service");
+exports.GroupService = group_service_1.default;
+const reply_service_1 = require("./reply.service");
+exports.ReplyService = reply_service_1.default;
+const opinion_service_1 = require("./opinion.service");
+exports.OpinionService = opinion_service_1.default;
+const post_service_1 = require("./post.service");
+exports.PostService = post_service_1.default;
 const user_service_1 = require("./user.service");
 exports.UserService = user_service_1.default;
+const author_service_1 = require("./author.service");
+exports.AuthorService = author_service_1.default;

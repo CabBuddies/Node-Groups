@@ -1,23 +1,24 @@
+import {primaryDb} from '../db';
 import * as mongoose from 'mongoose';
-
+import {statsSchema} from '../schemas';
 const groupSchema = new mongoose.Schema({
-    name:{
+    title:{
         type: String,
         trim: true,
-        required: 'Group Name is required'
+        required: 'Group Title is required'
     },
     description:{
         type: String,
         trim: true
+    }, 
+    author:{
+        type: String,
+        required: 'author is required'
     },
-    logoPicture:{
+    displayPicture:{
         type: String,
         trim: true,
         default:''
-    }, 
-    users:{
-        type: Array,
-        required: 'users are required'
     },
     createdAt: {
         type: Date,
@@ -27,6 +28,21 @@ const groupSchema = new mongoose.Schema({
         type: Date,
         default : Date.now
     },
+    active:{
+        type:Boolean,
+        default : true
+    },
+    stats:statsSchema,
+    topics:[{
+        topic:{
+            type: String,
+            trim: true
+        },
+        count:{
+            type: Number,
+            default: 0
+        }
+    }],
     access:{
         type:{
             type:String,
@@ -36,13 +52,10 @@ const groupSchema = new mongoose.Schema({
         users:[
             String
         ]
-    }
-    
+    },
+    customAttributes:mongoose.Schema.Types.Mixed
 });
 
-
-
-
-const Group = mongoose.model('Group',groupSchema);
+const Group = primaryDb.model('Group',groupSchema);
 
 export default Group;

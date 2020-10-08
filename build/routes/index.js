@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRoutes = exports.AuthRoutes = void 0;
-const auth_routes_1 = require("./auth.routes");
-Object.defineProperty(exports, "AuthRoutes", { enumerable: true, get: function () { return auth_routes_1.router; } });
-const user_routes_1 = require("./user.routes");
-Object.defineProperty(exports, "UserRoutes", { enumerable: true, get: function () { return user_routes_1.router; } });
+exports.OpinionRoutes = exports.ReplyRoutes = exports.PostRoutes = exports.GroupRoutes = void 0;
+const group_routes_1 = require("./group.routes");
+exports.GroupRoutes = group_routes_1.default;
+const post_routes_1 = require("./post.routes");
+exports.PostRoutes = post_routes_1.default;
+const reply_routes_1 = require("./reply.routes");
+exports.ReplyRoutes = reply_routes_1.default;
+const opinion_routes_1 = require("./opinion.routes");
+exports.OpinionRoutes = opinion_routes_1.default;

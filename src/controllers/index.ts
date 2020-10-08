@@ -1,6 +1,11 @@
 import GroupController from './group.controller';
 import PostController from './post.controller';
-export {
+import ReplyController from './reply.controller';
+import OpinionController from './opinion.controller';
+
+export{
     GroupController,
-    PostController
+    PostController,
+    ReplyController,
+    OpinionController
 }

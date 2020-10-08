@@ -1,7 +1,8 @@
 import {Repositories} from 'node-library';
-import {Post,Reply} from '../models';
+import {Reply} from '../models';
+import AuthorRepository from './author.repository';
 
-class ReplyRepository extends Repositories.BaseRepository {
+class ReplyRepository extends AuthorRepository {
     constructor(){
         super(Reply);
     }

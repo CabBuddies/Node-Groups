@@ -1,7 +1,8 @@
 import {Repositories} from 'node-library';
-import {Group,Post} from '../models';
+import {Post} from '../models';
+import StatsRepository from './stats.repository';
 
-class PostRepository extends Repositories.BaseRepository {
+class PostRepository extends StatsRepository {
     constructor(){
         super(Post);
     }

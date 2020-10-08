@@ -1,9 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RefreshToken = exports.User = exports.Auth = void 0;
+exports.User = exports.Opinion = exports.Reply = exports.Post = exports.Group = void 0;
+const group_model_1 = require("./group.model");
+exports.Group = group_model_1.default;
+const post_model_1 = require("./post.model");
+exports.Post = post_model_1.default;
+const reply_model_1 = require("./reply.model");
+exports.Reply = reply_model_1.default;
+const opinion_model_1 = require("./opinion.model");
+exports.Opinion = opinion_model_1.default;
 const user_model_1 = require("./user.model");
 exports.User = user_model_1.default;
-const auth_model_1 = require("./auth.model");
-exports.Auth = auth_model_1.default;
-const refresh_token_model_1 = require("./refresh.token.model");
-exports.RefreshToken = refresh_token_model_1.default;

@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = exports.AuthController = void 0;
-const auth_controller_1 = require("./auth.controller");
-exports.AuthController = auth_controller_1.default;
-const user_controller_1 = require("./user.controller");
-exports.UserController = user_controller_1.default;
+exports.OpinionController = exports.ReplyController = exports.PostController = exports.GroupController = void 0;
+const group_controller_1 = require("./group.controller");
+exports.GroupController = group_controller_1.default;
+const post_controller_1 = require("./post.controller");
+exports.PostController = post_controller_1.default;
+const reply_controller_1 = require("./reply.controller");
+exports.ReplyController = reply_controller_1.default;
+const opinion_controller_1 = require("./opinion.controller");
+exports.OpinionController = opinion_controller_1.default;

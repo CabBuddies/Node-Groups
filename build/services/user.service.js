@@ -11,32 +11,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const repositories_1 = require("../repositories");
 const node_library_1 = require("node-library");
-const pubsub_helper_1 = require("../helpers/pubsub.helper");
+const binder_helper_1 = require("../helpers/binder.helper");
 class UserService extends node_library_1.Services.BaseService {
     constructor() {
         super(new repositories_1.UserRepository());
-        this.getUserByEmail = (request, email) => __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.getUserByEmail(email);
+        this.getUsersByUserIds = (userIds) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.getUsersByUserIds(userIds);
         });
-        node_library_1.Services.PubSub.Organizer.addSubscriber(pubsub_helper_1.PubSubEventTypes.AUTH.USER_CREATED, this);
+        node_library_1.Services.Binder.bindFunction(binder_helper_1.BinderNames.USER.EXTRACT.USER_PROFILES, this.getUsersByUserIds);
     }
-    eventListened(event) {
-        console.log('UserService', event);
-        switch (event.type) {
-            case pubsub_helper_1.PubSubEventTypes.AUTH.USER_CREATED:
-                this.userCreated(event);
-                break;
-            default:
-                break;
+    static getInstance() {
+        if (!UserService.instance) {
+            UserService.instance = new UserService();
         }
-    }
-    userCreated(event) {
-        const { email, firstName, lastName } = event.data;
-        this.create(event.request, {
-            email,
-            firstName,
-            lastName
-        });
+        return UserService.instance;
     }
 }
-exports.default = UserService;
+exports.default = UserService.getInstance();

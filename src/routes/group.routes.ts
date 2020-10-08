@@ -1,20 +1,45 @@
-import * as express from 'express';
 import { Router } from 'express';
-import { Middlewares } from 'node-library';
-import { GroupController } from '../controllers'
+import { Helpers, Middlewares } from 'node-library';
+import { GroupController } from '../controllers';
+import { isAuthor } from '../middlewares';
+import { AuthorService } from '../services';
 
 const router = Router()
 
-const groupController = new GroupController()
+const controller = new GroupController();
 
-//router.post('/',LoggerMiddleware('v1'),userController.create)
+const authorService : AuthorService = <AuthorService> (controller.service);
 
-//router.get('/',Middlewares.authCheck(false),userController.getAll)
+const validatorMiddleware = new Middlewares.ValidatorMiddleware();
 
-//router.get('/me',Middlewares.authCheck(true),userController.getMe)
+const schema = {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["title","description"],
+    "properties": {
+        "title": {
+            "type":"string"
+        },
+        "description": {
+            "type":"string"
+        },
+        "displayPicture": {
+            "type":"string"
+        },
+        "customAttributes":{
+            "type":"object"
+        }
+    }
+};
 
-//router.get('/:email',Middlewares.authCheck(false),userController.getEmail)
+router.post('/',Middlewares.authCheck(true),validatorMiddleware.validateRequestBody(schema),controller.create)
 
-//router.delete('/delete_all',userController.deleteAll)
+router.get('/',Middlewares.authCheck(false),controller.getAll)
 
-export{ router }
+router.get('/:id',Middlewares.authCheck(false),controller.get)
+
+router.put('/:id',Middlewares.authCheck(true),isAuthor(authorService),validatorMiddleware.validateRequestBody(schema),controller.update)
+
+router.delete('/:id',Middlewares.authCheck(true),isAuthor(authorService),controller.delete)
+
+export default router;
