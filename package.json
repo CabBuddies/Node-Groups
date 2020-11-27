@@ -8,7 +8,9 @@
     "start": "nodemon -x ts-node ./src/index.ts",
     "test": "mocha -r ts-node/register src/test/**/*.test.ts --timeout 60000",
     "rebuild": "npm prune | npm update | npm run build | npm install",
-    "refresh": "npm run rebuild | npm start"
+    "refresh": "npm run rebuild | npm start",
+    "refresh-nl": "npm uninstall node-library && npm install nihalkondasjsu/Node-Library.git#master",
+    "git": "git add . && git commit -am 'Quick Commit' && git push -u origin master"
   },
   "keywords": [],
   "author": "",
@@ -26,10 +28,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-list-endpoints": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.10.8",
-    "node-library": "git://github.com/CabBuddies/Node-Library.git#master",
+    "node-library": "github:nihalkondasjsu/Node-Library#master",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
     "simple-encryptor": "^3.0.0",

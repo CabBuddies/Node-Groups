@@ -1,9 +1,8 @@
 import {Helpers,Services} from 'node-library';
 import { StatsRepository } from '../repositories';
 import {PubSubMessageTypes} from '../helpers/pubsub.helper';
-import AuthorService from './author.service';
 
-class StatsService extends AuthorService {
+class StatsService extends Services.AuthorService {
 
     constructor(repository : StatsRepository) { 
         super(repository);

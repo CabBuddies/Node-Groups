@@ -1,26 +1,29 @@
 import { Router } from 'express';
-import { Middlewares } from 'node-library';
+import { Services,Middlewares } from 'node-library';
+import ReplyRoutes from './reply.routes';
 import { PostController } from '../controllers';
-import { isAuthor } from '../middlewares';
-import { AuthorService } from '../services';
+import { isMember } from '../middlewares';
+import OpinionRoutes from './opinion.routes';
 
 const router = Router()
 
 const controller = new PostController();
 
-const authorService : AuthorService = <AuthorService> (controller.service);
+const authorService : Services.AuthorService = <Services.AuthorService> (controller.service);
 
 
 const validatorMiddleware = new Middlewares.ValidatorMiddleware();
 
-router.post('/',Middlewares.authCheck(true),validatorMiddleware.validateRequestBody({
+
+router.param('id',Middlewares.addParamToRequest());
+
+router.param('postId',Middlewares.addParamToRequest());
+
+router.post('/',Middlewares.authCheck(true),isMember('post'),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
-    "required": ["groupId","title","body","topics"],
+    "required": ["title","body","topics"],
     "properties": {
-        "groupId":{
-            "type":"string"
-        },
         "title":{
             "type":"string"
         },
@@ -40,11 +43,11 @@ router.post('/',Middlewares.authCheck(true),validatorMiddleware.validateRequestB
     }
 }),controller.create)
 
-router.get('/',Middlewares.authCheck(false),controller.getAll)
+router.post('/search',Middlewares.authCheck(false),isMember('view'),controller.getAll)
 
-router.get('/:id',Middlewares.authCheck(false),controller.get)
+router.get('/:id',Middlewares.authCheck(false),isMember('view'),controller.get)
 
-router.put('/:id',Middlewares.authCheck(true),isAuthor(authorService),validatorMiddleware.validateRequestBody({
+router.put('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
     "required": ["title","body","topics"],
@@ -68,7 +71,11 @@ router.put('/:id',Middlewares.authCheck(true),isAuthor(authorService),validatorM
     }
 }),controller.update)
 
-router.delete('/:id',Middlewares.authCheck(true),isAuthor(authorService),controller.delete)
+router.delete('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
 
+const postExists = Middlewares.checkDocumentExists(authorService,'postId');
+
+router.use('/:postId/reply',postExists,ReplyRoutes);
+router.use('/:postId/opinion',postExists,OpinionRoutes);
 
 export default router;

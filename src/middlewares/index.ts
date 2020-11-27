@@ -1,5 +1,5 @@
-import isAuthor from './author.middleware';
+import isMember from './member.middleware';
 
 export {
-    isAuthor
+    isMember
 }

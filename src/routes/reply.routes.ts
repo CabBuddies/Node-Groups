@@ -1,25 +1,21 @@
 import { Router } from 'express';
-import { Middlewares } from 'node-library';
+import { Services,Middlewares } from 'node-library';
 import { ReplyController } from '../controllers';
-import { isAuthor } from '../middlewares';
-import { AuthorService } from '../services';
+import { isMember } from '../middlewares';
 
 const router = Router()
 
 const controller = new ReplyController();
 
-const authorService : AuthorService = <AuthorService> (controller.service);
+const authorService : Services.AuthorService = <Services.AuthorService> (controller.service);
 
 const validatorMiddleware = new Middlewares.ValidatorMiddleware();
 
-router.post('/',Middlewares.authCheck(true),validatorMiddleware.validateRequestBody({
+router.post('/',Middlewares.authCheck(true),isMember('post'),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
-    "required": ["postId","body"],
+    "required": ["body"],
     "properties": {
-        "postId":{
-            "type":"string"
-        },
         "body":{
             "type":"string"
         },
@@ -29,11 +25,11 @@ router.post('/',Middlewares.authCheck(true),validatorMiddleware.validateRequestB
     }
 }),controller.create)
 
-router.get('/',Middlewares.authCheck(false),controller.getAll)
+router.post('/search',Middlewares.authCheck(false),isMember('view'),controller.getAll)
 
-router.get('/:id',Middlewares.authCheck(false),controller.get)
+router.get('/:id',Middlewares.authCheck(false),isMember('view'),controller.get)
 
-router.put('/:id',Middlewares.authCheck(true),isAuthor(authorService),validatorMiddleware.validateRequestBody({
+router.put('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
     "required": ["body"],
@@ -47,7 +43,7 @@ router.put('/:id',Middlewares.authCheck(true),isAuthor(authorService),validatorM
     }
 }),controller.update)
 
-router.delete('/:id',Middlewares.authCheck(true),isAuthor(authorService),controller.delete)
+router.delete('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
 
 
 export default router;

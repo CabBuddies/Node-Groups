@@ -10,9 +10,6 @@ function startServer(){
     const router :express.Router = express.Router()
 
     router.use('/group',routes.GroupRoutes);
-    router.use('/post',routes.PostRoutes);
-    router.use('/reply',routes.ReplyRoutes);
-    router.use('/opinion',routes.OpinionRoutes);
     
     app.use('/api/v1',router);
     

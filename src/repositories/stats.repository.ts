@@ -1,8 +1,7 @@
 import {Repositories} from 'node-library';
 import * as mongoose from 'mongoose';
-import AuthorRepository from './author.repository';
 
-class StatsRepository extends AuthorRepository {
+class StatsRepository extends Repositories.AuthorRepository {
     constructor(model : mongoose.Model<any,{}>){
         super(model);
     }

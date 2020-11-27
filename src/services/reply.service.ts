@@ -1,10 +1,9 @@
 import {ReplyRepository} from '../repositories';
 import {Helpers,Services} from 'node-library';
 import {PubSubMessageTypes} from '../helpers/pubsub.helper';
-import AuthorService from './author.service';
 import { BinderNames } from '../helpers/binder.helper';
 
-class ReplyService extends AuthorService {
+class ReplyService extends Services.AuthorService {
 
     private static instance: ReplyService;
     
@@ -21,6 +20,10 @@ class ReplyService extends AuthorService {
     }
 
     create = async(request:Helpers.Request,data) => {
+
+        data.groupId = request.raw.params['groupId'];
+        data.postId = request.raw.params['postId'];
+
         console.log('reply.service',request,data);
 
         const postIdExists = await Services.Binder.boundFunction(BinderNames.POST.CHECK.ID_EXISTS)(request,data.postId)

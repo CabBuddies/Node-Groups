@@ -1,0 +1,46 @@
+###
+# @name signInAPI
+
+POST http://localhost:4000/api/v1/auth/sign_in
+Content-Type: application/json
+
+{
+    "email":"nihal+test1@cabbuddies.com",
+    "password":"strong"
+}
+
+###
+
+@accessToken = {{signInAPI.response.body.$.accessToken.value}}
+@refreshToken = {{signInAPI.response.body.$.refreshToken.value}}
+
+###
+
+POST http://localhost:4002/api/v1/group
+Authorization: Access {{accessToken}}
+Content-Type: application/json
+
+{
+    "title":"Sample Title",
+    "description":"Sample Description"
+}
+
+###
+
+5fb6e697aec1fc7d2301e0e5
+
+###
+
+POST http://localhost:4002/api/v1/group/5fb6e697aec1fc7d2301e0e5/access
+Authorization: Access {{accessToken}}
+Content-Type: application/json
+
+{
+    "userId":"5f59b9366368501be25f2541",
+    "role":"manager",
+    "status":"invited"
+}
+###
+
+POST http://localhost:4002/api/v1/group/5fb6e697aec1fc7d2301e0e5/access/search
+Authorization: Access {{accessToken}}

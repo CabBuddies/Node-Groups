@@ -62,6 +62,8 @@ class PostService extends StatsService {
     create = async(request:Helpers.Request,data) => {
         console.log('post.service',request,data);
 
+        data.groupId = request.raw.params['groupId'];
+
         const groupIdExists = await Services.Binder.boundFunction(BinderNames.GROUP.CHECK.ID_EXISTS)(request,data.groupId)
 
         console.log('post.service','postIdExists',groupIdExists);

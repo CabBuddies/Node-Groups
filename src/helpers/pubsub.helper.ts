@@ -20,6 +20,12 @@ const PubSubMessageTypes = {
     OPINION:{
         CREATED:"OPINION_CREATED",
         DELETED:"OPINION_DELETED"
+    },
+    ACCESS:{
+        CREATED:"ACCESS_CREATED",
+        READ:"ACCESS_READ",
+        UPDATED:"ACCESS_UPDATED",
+        DELETED:"ACCESS_DELETED"
     }
 }
 

@@ -1,11 +1,10 @@
 import {OpinionRepository} from '../repositories';
 import {Helpers,Services} from 'node-library';
 import {PubSubMessageTypes} from '../helpers/pubsub.helper';
-import AuthorService from './author.service';
 import { BinderNames } from '../helpers/binder.helper';
 import { JSON } from 'node-library/lib/helpers';
 
-class OpinionService extends AuthorService {
+class OpinionService extends Services.AuthorService {
 
     private static instance: OpinionService;
     
@@ -23,6 +22,9 @@ class OpinionService extends AuthorService {
 
     create = async(request:Helpers.Request,data) => {
         console.log('opinion.service',request,data);
+
+        data.groupId = request.raw.params['groupId'];
+        data.postId = request.raw.params['postId'];
 
         if(data.groupId){
             const groupIdExists = await Services.Binder.boundFunction(BinderNames.GROUP.CHECK.ID_EXISTS)(request,data.groupId)
