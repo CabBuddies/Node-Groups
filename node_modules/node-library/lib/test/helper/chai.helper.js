@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.should = exports.expect = exports.assert = void 0;
+const _chai = require('chai');
+const expect = _chai.expect;
+exports.expect = expect;
+const assert = _chai.assert;
+exports.assert = assert;
+const should = _chai.should;
+exports.should = should;

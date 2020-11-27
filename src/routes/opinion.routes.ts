@@ -11,7 +11,7 @@ const authorService : Services.AuthorService = <Services.AuthorService> (control
 
 const validatorMiddleware = new Middlewares.ValidatorMiddleware();
 
-router.post('/',Middlewares.authCheck(true),isMember('post'),validatorMiddleware.validateRequestBody({
+router.post('/',Middlewares.authCheck(true,true),isMember('post'),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
     "required": ["opinionType"],
@@ -33,6 +33,6 @@ router.post('/search',Middlewares.authCheck(false),isMember('view'),controller.g
 
 router.get('/:id',Middlewares.authCheck(false),isMember('view'),controller.get)
 
-router.delete('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
+router.delete('/:id',Middlewares.authCheck(true,true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
 
 export default router;

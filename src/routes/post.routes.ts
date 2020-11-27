@@ -19,7 +19,7 @@ router.param('id',Middlewares.addParamToRequest());
 
 router.param('postId',Middlewares.addParamToRequest());
 
-router.post('/',Middlewares.authCheck(true),isMember('post'),validatorMiddleware.validateRequestBody({
+router.post('/',Middlewares.authCheck(true,true),isMember('post'),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
     "required": ["title","body","topics"],
@@ -47,7 +47,7 @@ router.post('/search',Middlewares.authCheck(false),isMember('view'),controller.g
 
 router.get('/:id',Middlewares.authCheck(false),isMember('view'),controller.get)
 
-router.put('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),validatorMiddleware.validateRequestBody({
+router.put('/:id',Middlewares.authCheck(true,true),isMember('post'),Middlewares.isAuthor(authorService),validatorMiddleware.validateRequestBody({
     "type": "object",
     "additionalProperties": false,
     "required": ["title","body","topics"],
@@ -71,7 +71,7 @@ router.put('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAut
     }
 }),controller.update)
 
-router.delete('/:id',Middlewares.authCheck(true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
+router.delete('/:id',Middlewares.authCheck(true,true),isMember('post'),Middlewares.isAuthor(authorService),controller.delete)
 
 const postExists = Middlewares.checkDocumentExists(authorService,'postId');
 
