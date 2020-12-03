@@ -48,11 +48,11 @@ class PostService extends StatsService {
 
     
     replyCreated(request: Helpers.Request, data: any) {        
-        this.updateStat(request,data.GroupId,"replyCount",true);
+        this.updateStat(request,data.groupId,"replyCount",true);
     }
 
     replyDeleted(request: Helpers.Request, data: any) {
-        this.updateStat(request,data.GroupId,"replyCount",false);
+        this.updateStat(request,data.groupId,"replyCount",false);
     }
 
     postRead(request:Helpers.Request,data: any) {

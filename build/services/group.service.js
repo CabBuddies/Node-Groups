@@ -134,10 +134,10 @@ class GroupService extends stats_service_1.default {
         }
     }
     postCreated(request, data) {
-        this.updateStat(request, data.GroupId, "postCount", true);
+        this.updateStat(request, data.groupId, "postCount", true);
     }
     postDeleted(request, data) {
-        this.updateStat(request, data.GroupId, "postCount", false);
+        this.updateStat(request, data.groupId, "postCount", false);
     }
     groupRead(request, data) {
         this.updateStat(request, data._id, "viewCount", true);

@@ -23,17 +23,19 @@ const timeSchema = new mongoose.Schema({
     }
 });
 
-const placeSchema = new mongoose.Schema({
-    gps:{
-        lat:{
-            type:Number,
-            default:0.0
-        },
-        lng:{
-            type:Number,
-            default:0.0
-        }
+const geoSchema = new mongoose.Schema({
+    lat:{
+        type:Number,
+        default:0.0
     },
+    lng:{
+        type:Number,
+        default:0.0
+    }
+});
+
+const placeSchema = new mongoose.Schema({
+    gps:geoSchema,
     address:{
         raw:{
             type:String,
@@ -69,10 +71,9 @@ const placeSchema = new mongoose.Schema({
         default: false
     },
     flexibility:{
-        miles:{
-            type:Number,
-            default:0
-        }
+        bounds:[{
+            type:geoSchema
+        }]
     }
 });
 

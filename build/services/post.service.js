@@ -112,10 +112,10 @@ class PostService extends stats_service_1.default {
         }
     }
     replyCreated(request, data) {
-        this.updateStat(request, data.GroupId, "replyCount", true);
+        this.updateStat(request, data.groupId, "replyCount", true);
     }
     replyDeleted(request, data) {
-        this.updateStat(request, data.GroupId, "replyCount", false);
+        this.updateStat(request, data.groupId, "replyCount", false);
     }
     postRead(request, data) {
         this.updateStat(request, data._id, "viewCount", true);

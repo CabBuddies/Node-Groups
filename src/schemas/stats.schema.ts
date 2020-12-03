@@ -13,6 +13,10 @@ const statsSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
+    memberCount:{
+        type:Number,
+        default:0
+    },
     followCount:{
         type:Number,
         default:0
