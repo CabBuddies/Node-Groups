@@ -87,7 +87,7 @@ class PostService extends StatsService {
 
         console.log('post.service','published message');
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 
     getAll = async(request:Helpers.Request, query = {}, sort = {}, pageSize:number = 5, pageNum:number = 1, attributes:string[] = []) => {
@@ -98,7 +98,12 @@ class PostService extends StatsService {
             attributes = attributes.filter( function( el:string ) {
                 return exposableAttributes.includes( el );
             });
-        return this.repository.getAll(query,sort,pageSize,pageNum,attributes);
+
+        const data = await this.repository.getAll(query, sort, pageSize, pageNum, attributes);
+        
+        data.result = await this.embedAuthorInformation(request, data.result, ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES));
+
+        return data;
     }
 
     get = async(request:Helpers.Request, documentId: string, attributes?: any[]) => {
@@ -111,7 +116,11 @@ class PostService extends StatsService {
             }
         });
 
-        return await this.repository.get(documentId,attributes);
+        return (await this.embedAuthorInformation(
+            request,
+            [await this.repository.get(documentId, attributes)],
+            ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)
+        ))[0];
     }
 
     update = async(request:Helpers.Request,documentId:string,data) => {
@@ -131,7 +140,7 @@ class PostService extends StatsService {
             data
         });
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 
     delete = async(request:Helpers.Request,documentId) => {
@@ -147,7 +156,7 @@ class PostService extends StatsService {
             data
         });
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 }
 

@@ -47,7 +47,7 @@ class ReplyService extends Services.AuthorService {
 
         console.log('reply.service','published message');
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 
     get = async(request:Helpers.Request, documentId: string, attributes?: any[]) => {
@@ -60,7 +60,11 @@ class ReplyService extends Services.AuthorService {
             }
         });
 
-        return await this.repository.get(documentId,attributes);
+        return (await this.embedAuthorInformation(
+            request,
+            [await this.repository.get(documentId, attributes)],
+            ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)
+        ))[0];
     }
 
     update = async(request:Helpers.Request,documentId:string,data) => {
@@ -80,7 +84,7 @@ class ReplyService extends Services.AuthorService {
             data
         });
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 
     delete = async(request:Helpers.Request,documentId:string) => {
@@ -92,7 +96,7 @@ class ReplyService extends Services.AuthorService {
             data
         });
 
-        return data;
+        return (await this.embedAuthorInformation(request, [data], ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES)))[0];
     }
 }
 
