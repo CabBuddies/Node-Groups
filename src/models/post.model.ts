@@ -21,6 +21,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         trim: true
     }],
+    media:[{
+        type: String,
+        trim: true
+    }],
     author:{
        type:String,
        required: 'author is required'
