@@ -99,6 +99,23 @@ class PostService extends StatsService {
                 return exposableAttributes.includes( el );
             });
 
+        let restrictions = {};
+        
+        if(request.raw.params['groupId']){
+            restrictions = {"groupId":request.raw.params['groupId']};
+        }else if(request.isUserAuthenticated()){
+            restrictions = {"author":request.getUserId()};
+        }else {
+            this.buildError(404);
+        }
+
+        query = {
+            $and:[
+                query,
+                restrictions
+            ]
+        };
+
         const data = await this.repository.getAll(query, sort, pageSize, pageNum, attributes);
         
         data.result = await this.embedAuthorInformation(request, data.result, ['author'], Services.Binder.boundFunction(BinderNames.USER.EXTRACT.USER_PROFILES));
