@@ -91,7 +91,7 @@ class PostService extends StatsService {
     }
 
     getAll = async(request:Helpers.Request, query = {}, sort = {}, pageSize:number = 5, pageNum:number = 1, attributes:string[] = []) => {
-        const exposableAttributes = ['author','groupId','title','topics','media','lastModifiedAt','createdAt','active','stats','access.type'];
+        const exposableAttributes = ['author','groupId','title','body','topics','media','lastModifiedAt','createdAt','active','stats','access.type'];
         if(attributes.length === 0)
             attributes = exposableAttributes;
         else
