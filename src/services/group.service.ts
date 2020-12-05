@@ -100,7 +100,7 @@ class GroupService extends StatsService {
     }
 
     getAll = async (request: Helpers.Request, query = {}, sort = {}, pageSize: number = 5, pageNum: number = 1, attributes: string[] = []) => {
-        const exposableAttributes = ['author', 'title', 'displayPicture','plan', 'createdAt', 'lastModifiedAt', 'stats', 'access.type', 'active'];
+        const exposableAttributes = ['author', 'title', 'displayPicture','plan', 'createdAt', 'lastModifiedAt', 'stats', 'access.type', 'active','customAttributes'];
         if (attributes.length === 0)
             attributes = exposableAttributes;
         else
